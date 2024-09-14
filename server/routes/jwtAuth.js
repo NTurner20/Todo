@@ -2,9 +2,13 @@ const router = require('express').Router();
 const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
+const validInfo = require("../middleware/validInfo");
+const authorization = require("../middleware/authorization");
+
+
 // registering
 
-router.post("/register", async (req,res) => {
+router.post("/register", validInfo, async (req,res) => {
     try {
         // 1. destructure req.body (name, email, password)
         const {name, email, password} = req.body;
@@ -26,6 +30,8 @@ router.post("/register", async (req,res) => {
         
         // 5. generate JWT token
         const token = jwtGenerator(newUser.rows[0].user_id);
+
+        res.json({token});
         
     } catch (error) {
         console.error(error.message);
@@ -35,7 +41,7 @@ router.post("/register", async (req,res) => {
 
 // login route
 
-router.post("/login", async (req,res) => {
+router.post("/login", validInfo, async (req,res) => {
     try {
         // 1. destructure req.body
         const {email, password} = req.body;
@@ -61,6 +67,16 @@ router.post("/login", async (req,res) => {
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Server Error")
+    }
+})
+
+// Verify
+router.get("/is-verify", authorization, async (req, res) => {
+    try {
+        res.json(true)
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Server Error")       
     }
 })
 
