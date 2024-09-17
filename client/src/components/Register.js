@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import {Link} from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = ({setAuth}) => {
     const [inputs, setInputs] = useState({
@@ -14,7 +16,7 @@ const Register = ({setAuth}) => {
     };
 
     const onSubmitForm = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
             const body = {email,password,name}
             // console.log(JSON.stringify(body))
@@ -27,8 +29,16 @@ const Register = ({setAuth}) => {
 
             const parseRes = await response.json();
 
-            localStorage.setItem("token", parseRes.token);
-            setAuth(true);
+            if(parseRes.token) {
+                localStorage.setItem("token", parseRes.token);
+                setAuth(true);
+                toast.success("Registered Successfully!")
+            } else {
+                setAuth(false);
+                toast.error(parseRes);
+            }
+
+            
 
 
         } catch (error) {
@@ -65,6 +75,7 @@ const Register = ({setAuth}) => {
                 onChange={onChange}
             />
             <button className="btn btn-success w-100">Submit</button>
+            <Link to="/login">Login</Link>
         </form>
         </>
     );

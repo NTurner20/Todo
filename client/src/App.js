@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+
 
 // components
 import Dashboard from './components/Dashboard';
@@ -15,6 +18,25 @@ function App() {
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean);
   };
+
+  async function isAuth() {
+    try {
+      const response = await fetch("http://localhost:5001/auth/is-verify",{
+        method:"GET",
+        headers:{token:localStorage.token}
+      });
+
+      const parseRes = await response.json()
+
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false)
+    } catch (error) {
+      console.error(error.message);
+      
+    }
+  }
+  useEffect(() => {
+    isAuth()
+  })
   return (
     <>
     <Router>
@@ -25,8 +47,8 @@ function App() {
         <Route path="/dashboard" element={isAuthenticated ?<Dashboard setAuth = {setAuth}/> : <Navigate to="/login"/>}/>
       </Routes>
       </div>
-
     </Router>
+    <ToastContainer />
     </>
   );
 }

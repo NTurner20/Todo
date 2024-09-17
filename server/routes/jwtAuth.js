@@ -15,7 +15,7 @@ router.post("/register", validInfo, async (req,res) => {
         // 2. check if user exists (if exists throw error)
         const user = await pool.query("SELECT * FROM users WHERE user_email = $1",[email]);
         if(user.rows.length !== 0) {
-            return res.status(401).send("User already exists");
+            return res.status(401).json("User already exists");
         }
         // 3. Bcrypt user password
         const saltRound = 10;
@@ -45,12 +45,13 @@ router.post("/login", validInfo, async (req,res) => {
     try {
         // 1. destructure req.body
         const {email, password} = req.body;
+        
         // 2. check if user doesnt exist
         const user = await pool.query("SELECT * FROM users WHERE user_email = $1",[email]);
+
         // 3. check if incoming password is the same as db password
         if(user.rows.length === 0){
             return res.status(401).json("Email or Password incorrect");
-
         }
 
         const validPassword = await bcrypt.compare(password, user.rows[0].user_password);
@@ -59,7 +60,7 @@ router.post("/login", validInfo, async (req,res) => {
         }
 
         // 4. give them JWT token
-        const token = jwtGenerator(user.rows[0].use_id);
+        const token = jwtGenerator(user.rows[0].user_id);
 
         res.json({token});
 
