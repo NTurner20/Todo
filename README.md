@@ -1,29 +1,29 @@
 # PERN Stack Login with JWT
 
-This is a simple authentication system built using the PERN stack (PostgreSQL, Express, React, Node.js) with JSON Web Tokens (JWT) for user authentication. The app provides a basic user registration and login system where users can securely log in and manage sessions using JWT.
+This is a simple authentication system built using the PERN stack (PostgreSQL, Express, React, Node.js) with JSON Web Tokens (JWT) for user authentication. The app provides user registration and login functionality with JWT-based session management. Notifications for key actions such as login, logout, registration, and errors are provided using `react-toastify`.
 
 Special Thanks to QuackLearner, check out their channel: https://www.youtube.com/@TheQuackLearner
 
 ## Features
 
-- User registration
-- User login
-- JWT-based authentication
-- Protected routes
-- Secure password handling with bcrypt
+- User registration and login
+- JWT-based authentication for protected routes
+- Secure password storage with bcrypt
+- Notifications for user actions with `react-toastify`
 
 ## Technologies Used
 
-- **PostgreSQL** - Relational database for storing user information.
-- **Express.js** - Backend framework for handling API requests.
-- **React.js** - Frontend framework for creating the user interface.
-- **Node.js** - Server-side JavaScript runtime.
-- **JWT (JSON Web Token)** - For secure authentication and session management.
-- **Bcrypt** - For password hashing.
+- **PostgreSQL** - Relational database for storing user information
+- **Express.js** - Backend framework for handling API requests
+- **React.js** - Frontend framework for building the UI
+- **Node.js** - Server-side JavaScript runtime
+- **JWT (JSON Web Token)** - For secure authentication
+- **Bcrypt** - For password hashing
+- **React-Toastify** - For displaying toast notifications
 
 ## Prerequisites
 
-Before running this project, ensure that you have the following installed:
+Make sure you have the following installed:
 
 - **Node.js** (v14 or later)
 - **PostgreSQL** (v12 or later)
@@ -39,8 +39,6 @@ cd pern-login-JWT
 
 ### 2. Install Dependencies
 
-Run the following command to install both backend and frontend dependencies:
-
 ```bash
 npm install
 cd client
@@ -49,10 +47,10 @@ npm install
 
 ### 3. Set Up the Database
 
-Make sure PostgreSQL is running on your system, then create a database and configure the environment variables.
+Ensure PostgreSQL is running, and create a database:
 
-1. Open `server/db.sql` and run the provided SQL script to set up your database schema.
-2. Create a `.env` file in the root of the `server` directory with the following variables:
+1. Run the SQL script located in `server/db.sql`.
+2. Set up environment variables in a `.env` file:
 
 ```
 PGUSER=<your_postgresql_username>
@@ -63,62 +61,44 @@ PGPORT=5432
 jwtSecret=<your_jwt_secret>
 ```
 
-### 4. Run the Backend Server
-
-After setting up the database and environment variables, you can start the backend server.
+### 4. Run the Backend
 
 ```bash
 npm run dev
 ```
 
-### 5. Run the Frontend Client
-
-Navigate to the `client` directory and start the React app.
+### 5. Run the Frontend
 
 ```bash
 cd client
 npm start
 ```
 
-The app should now be running on `http://localhost:3000` (React frontend) and `http://localhost:5001` (Node.js backend).
-
 ## API Endpoints
 
-### 1. **User Registration** - `/auth/register`
+### **User Registration** - `/auth/register`
 - Method: `POST`
 - Payload: `{ email, password, name }`
 - Description: Registers a new user and returns a JWT.
 
-### 2. **User Login** - `/auth/login`
+### **User Login** - `/auth/login`
 - Method: `POST`
 - Payload: `{ email, password }`
 - Description: Logs in a user and returns a JWT.
 
-### 3. **Protected Route** - `/dashboard`
+### **Protected Route** - `/dashboard`
 - Method: `GET`
-- Description: Fetches protected user information. Requires a valid JWT in the Authorization header.
+- Description: Requires a valid JWT to access user data.
 
-## Usage
+## Notifications
 
-### Register a User
-
-1. Navigate to the `/register` page.
-2. Enter your email, password, and name to create an account.
-
-### Login a User
-
-1. Navigate to the `/login` page.
-2. Enter your email and password to log in. On success, a JWT will be stored in the browser's localStorage for authentication purposes.
-
-### Protected Routes
-
-Once logged in, the app uses the JWT to access protected routes. Without a valid JWT, the user cannot access these routes.
+`react-toastify` is used for toast notifications during user actions, such as logging in, registering, logging out, and error handling. Toasts provide feedback to users for both successful and failed operations.
 
 ## Security Considerations
 
-- **Password Hashing**: Passwords are hashed using bcrypt before being stored in the database.
-- **JWT Expiration**: Tokens are set to expire after a certain period (configurable in the backend).
-- **HTTPS**: When deploying, ensure that your app uses HTTPS to encrypt communications between the client and the server.
+- **Password Hashing**: Passwords are securely hashed using bcrypt.
+- **JWT Expiration**: Tokens are set to expire after a certain time.
+- **HTTPS**: Ensure your app uses HTTPS in production for secure data transmission.
 
 ## License
 
