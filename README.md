@@ -53,11 +53,6 @@ Ensure PostgreSQL is running, and create a database:
 2. Set up environment variables in a `.env` file:
 
 ```
-PGUSER=<your_postgresql_username>
-PGHOST=<your_database_host>
-PGDATABASE=<your_database_name>
-PGPASSWORD=<your_postgresql_password>
-PGPORT=5432
 jwtSecret=<your_jwt_secret>
 ```
 
