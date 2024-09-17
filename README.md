@@ -49,7 +49,7 @@ npm install
 
 Ensure PostgreSQL is running, and create a database:
 
-1. Run the SQL script located in `server/db.sql`.
+1. Create the database and table if needed
 2. Set up environment variables in a `.env` file:
 
 ```
