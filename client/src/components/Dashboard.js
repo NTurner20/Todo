@@ -7,6 +7,8 @@ import ListTodo from "./todo/ListTodo";
 const Dashboard = ({setAuth}) => {
 
     const [name, setName] = useState("");
+    const [allTodos, setAllTodos] = useState([]);
+    const [todosChange, setTodosChange] = useState(false);
 
     async function getName() {
         
@@ -18,6 +20,7 @@ const Dashboard = ({setAuth}) => {
             });
 
             const parseRes = await response.json();
+            setAllTodos(parseRes);
             
             setName(parseRes[0].user_name);
             
@@ -29,7 +32,8 @@ const Dashboard = ({setAuth}) => {
 
     useEffect(() => {
         getName();
-    },[])
+        setTodosChange(false);
+    },[todosChange])
 
     const logout = (e) => {
         e.preventDefault();
@@ -40,17 +44,22 @@ const Dashboard = ({setAuth}) => {
 
     return (
         <>
-        <h1>Hello {name}</h1>
-        <InputTodo />
-        <ListTodo />
-        <button 
-            onClick={(e) =>{
-                logout(e)
-            }} 
-            className="btn btn-primary"
-        >
-            Logout
-        </button>
+        <div>
+        <div className="d-flex mt-5 justify-content-around">
+            <h2>Hello {name}</h2>
+            <button 
+                onClick={(e) =>{
+                    logout(e)
+                }} 
+                className="btn btn-primary"
+            >
+                Logout
+            </button>
+        </div>
+            <InputTodo setTodosChange={setTodosChange}/>
+            <ListTodo allTodos={allTodos} setTodosChange = {setTodosChange}/>
+        </div>
+        
         </>
     );
 };

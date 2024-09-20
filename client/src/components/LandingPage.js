@@ -3,21 +3,13 @@ import {Link} from "react-router-dom";
 
 const LandingPage = () => {
     return (
-        <>
-        <div className="container mt-20" style={{backgroundColor : 'lightgrey',padding: 20}}>
+        <div className="container py-5 bg-light mt-5 rounded">
             <h1>Welcome to Todoy!</h1>
-            <div className="row">
-                <div className="col col-1">
-                <Link to='/login' className='btn btn-primary'>Login</Link>
-                </div>
-                <div className="col col-1">
-                <Link to='/register' className='btn btn-primary'>Register</Link>
-                </div>
-            </div>
+            <p>Sign in or Register to start building your todo list!</p>
+            <Link to='/login' className='btn btn-primary'>Login</Link>
+            <Link to='/register' className='btn btn-primary ms-3'>Register</Link>
         </div>
-        
-        </>
-    )
+    );
 };
 
 export default LandingPage;

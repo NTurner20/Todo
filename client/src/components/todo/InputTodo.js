@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const InputTodo = () => {
+const InputTodo = ({setTodosChange}) => {
 
     const [description, setDescription] = useState("");
 
@@ -19,16 +19,17 @@ const InputTodo = () => {
             );
             // console.log(response);
             
-
-            window.location = ("/")
+            setTodosChange(true);
+            setDescription("");
+            // window.location = ("/")
             
         } catch (error) {
             console.error(error.message)
         }
     }
     return <>
-    <h1 className="text-center mt-5">P.E.R.N. Todo List</h1>
-    <form className="d-flex mt-5" onSubmit= {onSubmitForm}>
+    <h1 className="text-center my-5">Input Todo</h1>
+    <form className="d-flex" onSubmit= {onSubmitForm}>
         <input 
             type="text" 
             className="form-control" 

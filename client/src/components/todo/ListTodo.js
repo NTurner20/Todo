@@ -2,7 +2,7 @@ import React , {useEffect, useState} from "react";
 
 import EditTodo from "./EditTodo";
 
-const ListTodo = () => {
+const ListTodo = ({allTodos, setTodosChange}) => {
 
     const [todos, setTodos] = useState([]);
 
@@ -26,28 +26,28 @@ const ListTodo = () => {
         // window.location = "/"
     };
 
-    const getTodos = async () => {
-        try {
-            const response = await fetch("http://localhost:5001/dashboard/",{
-                method:"GET",
-                headers:{token:localStorage.token}
-            });
-            const jsonData = await response.json()
-            setTodos(jsonData)
-        } catch (error) {
-            console.error(error.message);
-        }
-    };
+    // const getTodos = async () => {
+    //     try {
+    //         const response = await fetch("http://localhost:5001/dashboard/",{
+    //             method:"GET",
+    //             headers:{token:localStorage.token}
+    //         });
+    //         const jsonData = await response.json()
+    //         setTodos(jsonData)
+    //     } catch (error) {
+    //         console.error(error.message);
+    //     }
+    // };
 
     useEffect(() => {
-        getTodos();
-    },[]);
+        setTodos(allTodos);
+    },[allTodos]);
     // console.log(todos)
 
 
     return (
         <>
-        <table className="table mt-5 text-center">
+        <table className="table mt-5">
             <thead>
                 <tr>
                 <th scope="col">Description</th>
@@ -60,7 +60,7 @@ const ListTodo = () => {
                     <tr key = {todo.todo_id}>
                         <td>{todo.description}</td>
                         <td>
-                            <EditTodo todo={todo}  />
+                            <EditTodo todo={todo} setTodosChange = {setTodosChange} />
                         </td>
                         <td>
                             <button className="btn btn-danger" onClick={() => deleteTodo(todo.todo_id)}>Delete</button>
