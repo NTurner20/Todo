@@ -69,7 +69,8 @@ const Login = ({setAuth}) => {
                 onChange={onChange}
             />
             <button className="btn btn-success w-100">Submit</button>
-            <Link to="/register">Register</Link>
+            <p className="form-text">Need to register? Click the link below!</p>
+            <Link to="/register" className="btn btn-primary">Register</Link>
         </form>
         </>
     );

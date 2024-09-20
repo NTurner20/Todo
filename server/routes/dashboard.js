@@ -19,6 +19,8 @@ router.get("/", authorization, async (req,res) => {
 // create new todo
 router.post("/todos", authorization, async (req, res) => {
     try {
+        // console.log(req.body);
+        
         const { description } = req.body;
         const newTodo = await pool.query(
             "INSERT INTO todo (user_id, description) VALUES ($1,$2) RETURNING *", [req.user,description]

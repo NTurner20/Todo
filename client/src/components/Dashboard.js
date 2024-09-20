@@ -1,5 +1,7 @@
 import React , {useState, useEffect} from "react";
 import { toast } from "react-toastify";
+import InputTodo from "./todo/InputTodo";
+import ListTodo from "./todo/ListTodo";
 
 
 const Dashboard = ({setAuth}) => {
@@ -17,7 +19,8 @@ const Dashboard = ({setAuth}) => {
 
             const parseRes = await response.json();
             
-            setName(parseRes.user_name);
+            setName(parseRes[0].user_name);
+            
         } catch (error) {
             console.error(error.message);
             
@@ -38,6 +41,8 @@ const Dashboard = ({setAuth}) => {
     return (
         <>
         <h1>Hello {name}</h1>
+        <InputTodo />
+        <ListTodo />
         <button 
             onClick={(e) =>{
                 logout(e)
