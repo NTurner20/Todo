@@ -5,7 +5,7 @@ const pool = new Pool({
     password : 'Holo4life',
     host : 'localhost' ,
     port: '5432' ,
-    database: 'pern-login'
+    database: 'todo'
 });
 
 module.exports = pool;
